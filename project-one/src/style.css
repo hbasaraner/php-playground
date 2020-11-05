@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: black;
+    color: white;
+}
+
+
+table {
+    padding-left: 15px;
+    text-align: left;
+    padding: 10px;
+    border: 1px solid white;
+    width: 400px;
+}
+th {
+    color: darkgoldenrod;
+    border-bottom: 1px solid white;
+}
+
+form > fieldset {
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 2px groove (internal value);
+}
