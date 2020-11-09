@@ -48,11 +48,11 @@ function HttpStatus($code) {
     return $status[$code] ? $status[$code] : $status[500];
 }
  
-// Set header
-function SetHeader($code){
-    header("HTTP/1.1 ".$code." ".HttpStatus($code));
-    header("Content-Type: application/json; charset=utf-8");
-}
+// // Set header
+// function SetHeader($code){
+//     header("HTTP/1.1 ".$code." ".HttpStatus($code));
+//     header("Content-Type: application/json; charset=utf-8");
+// }
  
 // Check username availability
 function checkUserName($s) {
