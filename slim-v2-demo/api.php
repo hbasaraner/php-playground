@@ -1,19 +1,21 @@
 <?php
     require 'vendor/autoload.php';
     require 'function.php';
+    require 'connection.php';
+
     $app = new \Slim\Slim();
 
+    $db = getConnection();
+
     // API Group
-    $app->group('/api', function() use ($app) {
+    $app->group('/api', function() use ($app, $db) {
 
         // USER Group
-        $app->group('/user', function() use ($app) {
+        $app->group('/user', function() use ($app, $db) {
 
             // GET
-            $app->get('/get/:id', function ($id) use ($app) {
+            $app->get('/get/:id', function ($id) use ($app, $db) {
                 try {
-                    $db = new PDO("mysql:host=localhost;dbname=test", "root", "");
-
                     # Control: Check if user exists
                     $isUserExist = $db->query("SELECT id FROM users WHERE id=$id")->rowCount();
                     if ($isUserExist) {
@@ -35,7 +37,7 @@
             });
 
             // POST
-            $app->post('/add', function() use($app) {
+            $app->post('/add', function() use($app, $db) {
                 try {
                     $input = json_decode($app->request->getBody());
 
@@ -44,8 +46,6 @@
                     $password = addslashes($input->password);
                     $mail = addslashes($input->mail);
                     $phone = addslashes($input->phone);
-                    
-                    $db = new PDO("mysql:host=localhost;dbname=test", "root", "");
 
                     # Control: Check if client entered all attributes
                     if(empty($username)||empty($name)||empty($password)||empty($mail)||empty($phone)) {
@@ -88,7 +88,7 @@
             });
 
             // PUT
-            $app ->put('/update/:id', function($id) use ($app) {
+            $app ->put('/update/:id', function($id) use ($app, $db) {
                 try {
                     // $input = json_decode(file_get_contents("php://input"));
                     $input = json_decode($app->request->getBody());
@@ -98,8 +98,6 @@
                     $password = addslashes($input->password);
                     $mail = addslashes($input->mail);
                     $phone = addslashes($input->phone);
-
-                    $db = new PDO("mysql:host=localhost;dbname=test", "root", "");
                     
                     # Control: Check if user exists
                     $isUserExist = $db->query("SELECT id FROM users WHERE id=$id")->rowCount();
@@ -129,10 +127,8 @@
             });
 
             // DELETE
-            $app ->delete('/delete/:id', function($id) use ($app) {
+            $app ->delete('/delete/:id', function($id) use ($app, $db) {
                 try {
-                    $db = new PDO("mysql:host=localhost;dbname=test", "root", "");
-
                     # Control: Check if user exists
                     $isUserExist = $db->query("SELECT id FROM users WHERE id=$id")->rowCount();
                     if (!$isUserExist) {
